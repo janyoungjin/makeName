@@ -1,7 +1,6 @@
 from fastapi import *
 from fastapi.responses import *
 from faker import Faker
-import clipboard
 
 fake=Faker('ko-kr')
 app=FastAPI()
@@ -14,30 +13,14 @@ def blank():
     return HTMLResponse("")
 
 @app.post('/name')
-def get_name(firstname:str=Form(...),name:str=Form(default=""),sex:str=Form(...)):
-    result="A"
-    while not((result[0]==firstname)and(name in result)):
-        result=fake.name_male() if sex=="남자" else fake.name_female() 
-    return HTMLResponse(f"""
-                        <html>
-                        <body>
-                            <center>
-                            <table>
-                                <tr><td colspan="2"><h1>{result}</h1></td></tr>
-                                <tr>
-                                    <td>
-                                        <button style="width: 100%;" onclick="copyToClipboard('{result}')">복사하기</button>
-                                    </td>
-                                </tr>
-                            </table>
-                            </center>
-                            <script>
-                            function copyToClipboard(text) {{
-                                navigator.clipboard.writeText(text).then(function() {{
-                                    alert('복사완료');
-                                }});
-                            }}
-                            </script>
-                        </body>
-                        </html>
-                        """)
+def get_name(firstname: str = Form(...), name: str = Form(default=""), sex: str = Form(...)):
+    if name == firstname:
+        return HTMLResponse("<center>돌림자와 성이 일치합니다<br>다시 입력해주세요</center>")
+    
+    count = 0
+    while count < 10000:
+        generated_name = (fake.name_male() if sex == "남자" else fake.name_female())
+        if (generated_name.startswith(firstname)) and (name in generated_name):
+            return HTMLResponse(f"<center><h2>{generated_name}</h2></center>")
+        count += 1
+    return HTMLResponse(f"<center>이름을 못지었습니다<br>다시 시도해주세요</center>")
