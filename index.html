@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>자녀 이름생성기</title>
+</head>
+<body>
+    <center>
+        <form action="/name" method="post" target="result">
+            <table>
+                <tr>
+                    <td colspan="3"><h1 style="text-align: center;">자녀 이름생성기</h1></td>
+                </tr>
+                <tr>
+                    <td>아버지 성</td>
+                    <td><input name="firstname" required maxlength="1" placeholder="필수" pattern="^[가-힣]$"></td>
+                </tr>
+                <tr>
+                    <td>돌림자</td>
+                    <td><input name="name"  maxlength="1" pattern="^[가-힣]$"></td>
+                </tr>
+                <tr>
+                    <td>성별</td>
+                    <td><input name="sex" type="radio" value="남자" checked>남자<input name="sex" type="radio" value="여자">여자</td>
+                </tr>
+                <tr>
+                    <td colspan="2"><button type="submit" style="width: 100%;">이름 찾기</button></td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <iframe name="result" src="/blank"  style="border:none"></iframe>
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </center>
+</body>
+</html>
